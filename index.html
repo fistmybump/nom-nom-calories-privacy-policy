@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Nom Nom Calories</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, sans-serif; line-height: 1.7; color: #1a1a1a; background: #fafafa; padding: 2rem 1rem; }
+    .container { max-width: 720px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 2.5rem 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    h1 { font-size: 1.75rem; font-weight: 800; margin-bottom: 0.25rem; color: #f97316; }
+    .app-name { font-size: 0.95rem; color: #888; margin-bottom: 2rem; }
+    h2 { font-size: 1.15rem; font-weight: 700; margin-top: 1.75rem; margin-bottom: 0.5rem; }
+    h3 { font-size: 1.05rem; font-weight: 600; margin-top: 1rem; margin-bottom: 0.35rem; }
+    p, li { font-size: 0.95rem; color: #333; }
+    ul { padding-left: 1.25rem; margin-top: 0.25rem; }
+    li { margin-bottom: 0.35rem; }
+    .updated { font-size: 0.85rem; color: #999; margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1rem; }
+    a { color: #f97316; }
+    table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; margin-bottom: 0.5rem; }
+    th, td { text-align: left; padding: 0.5rem 0.75rem; font-size: 0.9rem; border-bottom: 1px solid #eee; }
+    th { font-weight: 700; color: #555; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Privacy Policy</h1>
+    <p class="app-name">Nom Nom Calories</p>
+
+    <h2>1. Overview</h2>
+    <p>Nom Nom Calories ("the App") is a calorie and macro tracking application built for Android. Your privacy is important to us. This policy explains what data the App collects, how it is used, and your rights regarding that data.</p>
+
+    <h2>2. Data That Stays on Your Device</h2>
+    <p>The App stores all personal user data locally on your device using Android's native storage. <strong>Your food diary, nutrition targets, and fasting records never leave your device.</strong> The following data is stored only on your device:</p>
+    <ul>
+      <li><strong>Food diary entries</strong> — meal names, quantities, timestamps, calories, protein, carbs, and fat values.</li>
+      <li><strong>Nutrition targets</strong> — your daily calorie and macro goals.</li>
+      <li><strong>Fasting records</strong> — start times, target durations, and completion status.</li>
+      <li><strong>Streak data</strong> — daily logging streak calculations derived from your food diary.</li>
+      <li><strong>App preferences</strong> — water reminder settings, fasting target hours, selected AI model and provider.</li>
+      <li><strong>Groq API key</strong> — stored in Android's encrypted secure storage (KeyStore). The key never leaves your device except when sent directly to Groq's API for food analysis.</li>
+      <li><strong>Anonymous device identifier</strong> — a randomly generated UUID created on first launch, used solely to identify your device across analytics, error reporting, and feature flag services. This ID contains no personally identifiable information.</li>
+    </ul>
+    <p>Android cloud backup is disabled for this App (<code>allowBackup=false</code>), so your data is not backed up to Google's servers.</p>
+
+    <h2>3. Third-Party Services</h2>
+    <p>The App uses the following third-party services:</p>
+
+    <h3>a) Groq API — AI-Powered Nutritional Analysis</h3>
+    <p>When you describe a meal, the text is sent to the <a href="https://groq.com" target="_blank">Groq API</a> for AI-powered nutritional analysis. The API returns estimated calorie and macro data. Your Groq API key (which you provide) is included in these requests for authentication. Groq's use of this data is governed by <a href="https://groq.com/privacy-policy/" target="_blank">Groq's Privacy Policy</a>.</p>
+
+    <h3>b) PostHog — Product Analytics</h3>
+    <p>The App uses <a href="https://posthog.com" target="_blank">PostHog</a> for anonymous product analytics to help us understand how the App is used and improve it. PostHog is configured in <strong>privacy-first mode</strong>:</p>
+    <ul>
+      <li>Automatic event capture, session recording, heatmaps, and automatic pageview tracking are <strong>all disabled</strong>.</li>
+      <li>Only three explicit events are tracked: <strong>app opened</strong>, <strong>API call success</strong> (includes AI model name, token count, and processing time), and <strong>API call failure</strong> (includes AI model name and error message).</li>
+      <li>You are identified only by the anonymous device UUID — no name, email, IP-based geolocation, or other personal data is collected.</li>
+    </ul>
+    <p>PostHog's use of this data is governed by <a href="https://posthog.com/privacy" target="_blank">PostHog's Privacy Policy</a>.</p>
+
+    <h3>c) Sentry — Crash &amp; Error Reporting</h3>
+    <p>The App uses <a href="https://sentry.io" target="_blank">Sentry</a> to detect and diagnose crashes and errors. This helps us fix bugs quickly. Sentry receives:</p>
+    <ul>
+      <li>Error messages, stack traces, and device/OS metadata (e.g., Android version, device model).</li>
+      <li>The anonymous device UUID for grouping issues.</li>
+    </ul>
+    <p><strong>Groq API keys are automatically scrubbed</strong> from all Sentry data (breadcrumbs, request headers, exception values, and stack frame variables) before anything leaves your device. Sentry's use of this data is governed by <a href="https://sentry.io/privacy/" target="_blank">Sentry's Privacy Policy</a>.</p>
+
+    <h3>d) ConfigCat — Feature Flags &amp; Remote Configuration</h3>
+    <p>The App uses <a href="https://configcat.com" target="_blank">ConfigCat</a> for feature flags and remote configuration, allowing us to roll out new features gradually. ConfigCat receives only the anonymous device UUID for consistent flag evaluation. No personal data is sent. ConfigCat's use of this data is governed by <a href="https://configcat.com/company/privacy-policy/" target="_blank">ConfigCat's Privacy Policy</a>.</p>
+
+    <h2>4. Analytics Data Summary</h2>
+    <p>The table below summarizes what anonymous data is collected and why:</p>
+    <table>
+      <tr><th>Data</th><th>Purpose</th><th>Service</th></tr>
+      <tr><td>Anonymous device UUID</td><td>Unique device identity (no PII)</td><td>PostHog, Sentry, ConfigCat</td></tr>
+      <tr><td>App opened event</td><td>Usage frequency</td><td>PostHog</td></tr>
+      <tr><td>API call success/failure</td><td>AI feature reliability</td><td>PostHog</td></tr>
+      <tr><td>Crash reports &amp; errors</td><td>Bug detection and fixes</td><td>Sentry</td></tr>
+      <tr><td>Feature flag evaluation</td><td>Staged feature rollouts</td><td>ConfigCat</td></tr>
+    </table>
+    <p><strong>No personally identifiable information (PII) is ever included in analytics or error reports.</strong></p>
+
+    <h2>5. Data We Do NOT Collect</h2>
+    <ul>
+      <li>We do not collect personal information (name, email, phone number) through the App.</li>
+      <li>We do not require account creation or sign-in.</li>
+      <li>We do not display advertisements or use advertising identifiers.</li>
+      <li>We do not track your location.</li>
+      <li>We do not access your camera, contacts, microphone, or files.</li>
+      <li>We do not sell, share, or rent your data to any third party.</li>
+      <li>We do not perform session recording, heatmap tracking, or automatic event capture.</li>
+    </ul>
+
+    <h2>6. Feedback &amp; Bug Reports</h2>
+    <p>If you choose to send feedback or report a bug through the App, a pre-filled email is opened in your device's email client using a <code>mailto:</code> link. The App itself does not collect or store your email address. Sending the email is entirely your choice and is handled by your email provider, not by us.</p>
+
+    <h2>7. Permissions</h2>
+    <p>The App requests the following Android permissions:</p>
+    <ul>
+      <li><strong>INTERNET</strong> — Required to send meal descriptions to the Groq API, fetch AI model lists, and communicate with analytics (PostHog), error reporting (Sentry), and feature flag (ConfigCat) services.</li>
+      <li><strong>VIBRATE</strong> — Used for haptic feedback on user interactions.</li>
+      <li><strong>POST_NOTIFICATIONS</strong> — Used for water reminders and fasting milestone notifications. You can deny or revoke this permission at any time.</li>
+      <li><strong>SCHEDULE_EXACT_ALARM</strong> — Allows scheduling notifications at precise times for fasting milestones.</li>
+      <li><strong>RECEIVE_BOOT_COMPLETED</strong> — Re-schedules pending notifications after a device restart.</li>
+    </ul>
+
+    <h2>8. Data Retention &amp; Deletion</h2>
+    <p>Your food diary, targets, fasting records, and preferences are stored locally on your device. You have full control:</p>
+    <ul>
+      <li>Individual food entries can be deleted by swiping them in the diary.</li>
+      <li>All app data can be deleted by clearing the App's storage in Android Settings, or by uninstalling the App.</li>
+      <li>The anonymous device UUID is deleted when you clear storage or uninstall.</li>
+    </ul>
+    <p>Anonymous analytics and error data that has already been sent to PostHog, Sentry, or ConfigCat is subject to those services' respective retention policies. Since this data contains no PII, it cannot be linked back to you once the device UUID is deleted.</p>
+
+    <h2>9. Children's Privacy</h2>
+    <p>The App is not directed at children under 13. We do not knowingly collect data from children. If you believe a child under 13 has provided data through the App, please contact us so we can take appropriate action.</p>
+
+    <h2>10. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. Changes will be reflected on this page with an updated date below. We encourage you to review this policy periodically.</p>
+
+    <h2>11. Contact</h2>
+    <p>If you have questions about this Privacy Policy, you can reach us at: <a href="mailto:contact@nomnomcalories.com">contact@nomnomcalories.com</a></p>
+
+    <p class="updated">Last updated: April 24, 2026</p>
+  </div>
+</body>
+</html>
