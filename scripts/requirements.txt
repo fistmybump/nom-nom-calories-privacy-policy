@@ -1,4 +1,4 @@
 requests>=2.31
 beautifulsoup4>=4.12
-# Optional, only needed for --playwright mode:
-# playwright>=1.44
+anthropic>=0.50
+playwright>=1.44
