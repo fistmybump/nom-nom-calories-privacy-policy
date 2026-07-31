@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy — Nom Nom Calories</title>
+  <title>Privacy Policy, Nom Nom Calories</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: system-ui, -apple-system, sans-serif; line-height: 1.7; color: #1a1a1a; background: #fafafa; padding: 2rem 1rem; }
@@ -28,102 +28,202 @@
     <p class="app-name">Nom Nom Calories</p>
 
     <h2>1. Overview</h2>
-    <p>Nom Nom Calories ("the App") is a calorie and macro tracking application built for Android. Your privacy is important to us. This policy explains what data the App collects, how it is used, and your rights regarding that data.</p>
+    <p>Nom Nom Calories ("the App") is a calorie, macro and activity tracking app for Android. The App requires an account and stores your data on our servers so it survives a reinstall and stays consistent across sessions. This policy describes exactly what we collect, where it is kept, who else sees it, and what you can do about it.</p>
+    <p>We do not show ads, the App contains no advertising SDK, and we do not sell or rent your data.</p>
 
-    <h2>2. Data That Stays on Your Device</h2>
-    <p>The App stores all personal user data locally on your device using Android's native storage. <strong>Your food diary, nutrition targets, and fasting records never leave your device.</strong> The following data is stored only on your device:</p>
+    <h2>2. Account and identity</h2>
+    <p>You sign in with your phone number. The App sends the number to Google Firebase Authentication, which delivers a one-time SMS code; confirming that code signs you in and gives the App an identity token. We never see or store your SMS code.</p>
+    <p>On first sign-in we create an account record on our servers, keyed to the Firebase user id. That record can hold:</p>
     <ul>
-      <li><strong>Food diary entries</strong> — meal names, quantities, timestamps, calories, protein, carbs, and fat values.</li>
-      <li><strong>Nutrition targets</strong> — your daily calorie and macro goals.</li>
-      <li><strong>Fasting records</strong> — start times, target durations, and completion status.</li>
-      <li><strong>Streak data</strong> — daily logging streak calculations derived from your food diary.</li>
-      <li><strong>App preferences</strong> — water reminder settings, fasting target hours, selected AI model and provider.</li>
-      <li><strong>Groq API key</strong> — stored in Android's encrypted secure storage (KeyStore). The key never leaves your device except when sent directly to Groq's API for food analysis.</li>
-      <li><strong>Anonymous device identifier</strong> — a randomly generated UUID created on first launch, used solely to identify your device across analytics, error reporting, and feature flag services. This ID contains no personally identifiable information.</li>
+      <li><strong>Your phone number</strong> in international format, taken from the sign-in token.</li>
+      <li><strong>A keyed hash of your phone number</strong> (HMAC with a server-side secret). Friend search compares hashes, so a lookup does not need to expose the raw number.</li>
+      <li><strong>Display name</strong> and an optional <strong>@handle</strong>, if you set them.</li>
+      <li><strong>Monogram avatar</strong> details: one initial letter and a colour name, derived automatically.</li>
+      <li><strong>Goal labels</strong> (for example "Lose" and "Lose, 0.5 kg/wk"), units (metric or imperial), profile visibility, and your sharing level.</li>
+      <li><strong>An optional profile photo.</strong></li>
+      <li><strong>An optional training persona</strong>, if you fill it in: weight, step goal, gym days per week, experience level, interests, available equipment, and a free-text injuries note capped at 200 characters.</li>
+      <li><strong>Notification bookkeeping</strong>: a "last seen" timestamp, used to work out how many alerts are new, and a "cleared up to" timestamp written when you clear the list.</li>
     </ul>
-    <p>Android cloud backup is disabled for this App (<code>allowBackup=false</code>), so your data is not backed up to Google's servers.</p>
 
-    <h2>3. Third-Party Services</h2>
-    <p>The App uses the following third-party services:</p>
-
-    <h3>a) Groq API — AI-Powered Nutritional Analysis</h3>
-    <p>When you describe a meal, the text is sent to the <a href="https://groq.com" target="_blank">Groq API</a> for AI-powered nutritional analysis. The API returns estimated calorie and macro data. Your Groq API key (which you provide) is included in these requests for authentication. Groq's use of this data is governed by <a href="https://groq.com/privacy-policy/" target="_blank">Groq's Privacy Policy</a>.</p>
-
-    <h3>b) PostHog — Product Analytics</h3>
-    <p>The App uses <a href="https://posthog.com" target="_blank">PostHog</a> for anonymous product analytics to help us understand how the App is used and improve it. PostHog is configured in <strong>privacy-first mode</strong>:</p>
+    <h2>3. Data stored on our servers</h2>
+    <p>Your tracking data lives in your account. This is what we keep:</p>
     <ul>
-      <li>Automatic event capture, session recording, heatmaps, and automatic pageview tracking are <strong>all disabled</strong>.</li>
-      <li>Only three explicit events are tracked: <strong>app opened</strong>, <strong>API call success</strong> (includes AI model name, token count, and processing time), and <strong>API call failure</strong> (includes AI model name and error message).</li>
-      <li>You are identified only by the anonymous device UUID — no name, email, IP-based geolocation, or other personal data is collected.</li>
+      <li><strong>Food diary entries</strong>: name, optional portion label, the display line and time label shown in the diary, source (typed, photo, searched, manual), calories, protein, carbs, fat, an optional link to a food catalogue item, and the date.</li>
+      <li><strong>Activity sessions</strong>: type and sub-type, minutes, intensity, estimated calories, source, and for synced sessions the provider and the provider's record id.</li>
+      <li><strong>Weight entries</strong>: one weight per date.</li>
+      <li><strong>Goals and targets</strong>: daily calorie target, protein/carbs/fat targets, maintenance estimate, step goal, and the profile you entered to calculate them (sex, age, height, weight, activity level, goal, pace, units).</li>
+      <li><strong>Streaks</strong>: current streak, longest streak, last logged date.</li>
+      <li><strong>Reminder settings</strong>: water reminders on/off, frequency, active hours; fasting on/off and target hours.</li>
+      <li><strong>Health sync data</strong>: daily steps, daily sleep totals, daily distance and calories burned, and which health providers you connected. We also record on our servers when you granted consent for health sync and when you withdrew it. See section 6.</li>
+      <li><strong>Social data</strong>: friend and block relationships, groups you create or join, group membership, group streaks, group tasks, posts, comments, likes, and reminder nudges you send. See section 7.</li>
+      <li><strong>A profile summary</strong> copied across from your tracking data so your profile loads in one request: current and target weight, a pace line and an estimated-time line, a monthly weight series with its dates, a projection, a summary of your main lifts, and your diary streak. A visibility setting controls whether friends can see it.</li>
+      <li><strong>Plan status</strong>: whether your account is on the free plan, has an active subscription, or has your own AI key enabled, plus the subscription's product id and expiry.</li>
+      <li><strong>AI usage counters</strong>: how many AI calls your account made on a given day, per tool. These carry no content and expire automatically after about 40 days.</li>
+      <li><strong>A security audit trail</strong> for sensitive actions such as plan changes and blocks. It records the action, who did it, and a small structured detail; it does not record your phone number, diary content or keys.</li>
+      <li><strong>An idempotency replay store.</strong> When the App sends a write it can attach a retry key. We keep the response we sent back the first time, filed under your account and that key, so a retried request returns the same answer instead of creating a duplicate. These are copies of API responses, so the entry for a write that created a post holds that post's own fields. We stop replaying an entry after <strong>24 hours</strong> and a background sweep deletes the row itself at <strong>48 hours</strong>; see section 12 for what that means when you delete something.</li>
     </ul>
-    <p>PostHog's use of this data is governed by <a href="https://posthog.com/privacy" target="_blank">PostHog's Privacy Policy</a>.</p>
+    <p>All traffic between the App and our servers runs over HTTPS.</p>
 
-    <h3>c) Sentry — Crash &amp; Error Reporting</h3>
-    <p>The App uses <a href="https://sentry.io" target="_blank">Sentry</a> to detect and diagnose crashes and errors. This helps us fix bugs quickly. Sentry receives:</p>
+    <h2>4. Data that stays on your device</h2>
+    <p>Some data is kept on the phone, either as a local mirror or because it should never leave:</p>
     <ul>
-      <li>Error messages, stack traces, and device/OS metadata (e.g., Android version, device model).</li>
-      <li>The anonymous device UUID for grouping issues.</li>
+      <li><strong>A local copy of your diary, targets and sync bookkeeping</strong>, so the App works while the network is slow or down.</li>
+      <li><strong>App preferences</strong>: theme, health metric toggles, your chosen AI provider and model name, and a flag recording that the one-time import from the older version of the App has run.</li>
+      <li><strong>Your own AI key</strong>, if you provide one. It is written to Android's encrypted secure store (backed by the Android Keystore). See section 8 for when it is used.</li>
+      <li><strong>Photos you attach when logging</strong>, saved as files in the App's private storage, and a local copy of your profile photo.</li>
+      <li><strong>An anonymous device identifier</strong>, a random UUID generated on first launch. It identifies the device to analytics, crash reporting and feature flags. It is not derived from any hardware id and contains nothing personal.</li>
     </ul>
-    <p><strong>Groq API keys are automatically scrubbed</strong> from all Sentry data (breadcrumbs, request headers, exception values, and stack frame variables) before anything leaves your device. Sentry's use of this data is governed by <a href="https://sentry.io/privacy/" target="_blank">Sentry's Privacy Policy</a>.</p>
+    <p>Android's cloud backup is enabled for the App, but its backup rules include only the App's small preference files, and explicitly exclude the encrypted secure store. So your AI key is never in a device backup, and neither is the local copy of your diary or any photo the App saved.</p>
 
-    <h3>d) ConfigCat — Feature Flags &amp; Remote Configuration</h3>
-    <p>The App uses <a href="https://configcat.com" target="_blank">ConfigCat</a> for feature flags and remote configuration, allowing us to roll out new features gradually. ConfigCat receives only the anonymous device UUID for consistent flag evaluation. No personal data is sent. ConfigCat's use of this data is governed by <a href="https://configcat.com/company/privacy-policy/" target="_blank">ConfigCat's Privacy Policy</a>.</p>
+    <h2>5. Photos and media</h2>
+    <p>The camera and photo library are used only when you start one of these actions: analysing a meal from a photo, attaching a photo to a logged meal, submitting a group proof photo, setting a group cover image, or setting your profile photo.</p>
+    <ul>
+      <li>There are two upload routes, and which one is used depends on what you are uploading. A <strong>profile photo</strong> goes straight from your phone to <strong>Azure Blob Storage</strong>, using a write-only link that covers only that one file and expires after <strong>15 minutes</strong>, capped at <strong>20 MB</strong>. A <strong>post photo</strong> (<strong>5 MB</strong>), a <strong>group cover image</strong> (<strong>2 MB</strong>) or a <strong>group proof</strong> (<strong>20 MB</strong>) is sent to our API inside the request itself.</li>
+      <li>Both routes end in the same processing. Our server decodes the image, <strong>strips EXIF metadata</strong> (which can include the time and place a photo was taken), and writes resized JPEG versions. On the direct route it then deletes the original upload; an upload that is started but never finished is deleted by a storage rule after <strong>1 day</strong>.</li>
+      <li>The storage container is private. Nothing is served from a public URL. When the App needs to show an image it asks our server for a read link that expires after <strong>15 minutes</strong>.</li>
+      <li><strong>Group proof photos are handled differently.</strong> They are never served by link at all. Each stored version is encrypted with AES-256-GCM under a per-photo key, which is itself wrapped with a master key held only in our server configuration. A proof video is encrypted exactly as it was uploaded, without being re-encoded. Proofs are decrypted and streamed through our API to members of that group only.</li>
+    </ul>
 
-    <h2>4. Analytics Data Summary</h2>
-    <p>The table below summarizes what anonymous data is collected and why:</p>
+    <h2>6. Health Connect data</h2>
+    <p>On Android you can connect the App to <a href="https://support.google.com/android/answer/12201227" target="_blank">Health Connect</a>, the system health store on your phone. Nothing is read until you grant permission in the system sheet.</p>
+    <p>The App asks to <strong>read</strong> these record types: Steps, Exercise sessions, Sleep sessions, Distance, Active calories burned, and Total calories burned. It also asks for the Health Connect "read history" permission, which allows reading records older than 30 days. Background reading is a <strong>separate, optional</strong> request made from the Connections screen. The sync itself runs while the App is open, so declining that request does not stop your data syncing. The release build of the App declares <strong>no Health Connect write permission</strong>: it never writes anything back into your health store.</p>
+    <p>What we upload to your account is summarised, not raw:</p>
+    <ul>
+      <li>Steps totalled per calendar day.</li>
+      <li>Sleep totalled per wake-up day, plus light, deep, REM and awake minutes when your source records stages.</li>
+      <li>Distance, active calories and total calories, each totalled per calendar day.</li>
+      <li>Exercise sessions: activity type, start time, duration in minutes, and the provider's record id, which is used so that re-syncing the same workout updates it instead of duplicating it.</li>
+    </ul>
+    <p>When you first connect, the App backfills the last <strong>30 days</strong>. After that it syncs yesterday and today when you bring the App to the foreground, and not more often than once every <strong>15 minutes</strong>. Each metric has its own toggle, and a metric you turn off is not read or sent.</p>
+    <p>Tapping Disconnect in the App stops the sync. Data already synced to your account stays until you delete the account (section 12). Revoking the App's access inside Health Connect settings stops it at the source.</p>
+
+    <h2>7. Social features</h2>
+    <p>Social features are opt-in in the sense that nothing happens until you add a friend or create a group.</p>
+    <ul>
+      <li><strong>Finding friends.</strong> You type a phone number. The App sends it to our server, which hashes it and looks for a matching account. The App never reads your contacts and has no contacts permission. This lookup is rate limited to 30 searches per minute per account.</li>
+      <li><strong>Posts.</strong> A post can only be created from a meal or workout you just logged. There is no free compose box. Your <strong>sharing level</strong> decides what leaves your account: "Everything" shares meal names, photos and the numbers; "Stats only" shares calories, macros and workouts with no names and no photos; "Nothing" posts nothing at all, and your groups keep working.</li>
+      <li><strong>Who sees posts.</strong> The feed is friends only, enforced on the server. The posts on your profile are visible to you and to accepted friends, and nobody else. A separate profile visibility setting decides whether friends can see the weight and strength summary on your profile at all.</li>
+      <li><strong>Groups</strong> hold up to 6 members. Members see the group's name, cover image, streak, tasks, and each other's proofs, comments and likes while those exist.</li>
+      <li><strong>Comments and likes</strong> you leave are visible to the people who can see the thing you commented on or liked.</li>
+      <li><strong>Notifications</strong> inside the App are assembled on request from your friend, group and post activity; there is no stored feed of them. What we do store is how you have cleared them: a timestamp of when you last looked, a "cleared up to" timestamp written when you clear the list, and one small row per item you dismissed on its own, so that item does not come back.</li>
+    </ul>
+
+    <h2>8. AI-powered analysis</h2>
+    <p>When you describe a meal in words, or submit a photo of a meal, that content is sent to our own AI service, which forwards it to an external model provider to get a food and macro estimate back. Two smaller features run through the same service: a <strong>recipe</strong> for a meal you name, and a <strong>suggested recipe</strong> built around the macros you have left on a day.</p>
+    <ul>
+      <li><strong>What is sent</strong>: the text you typed, or the image bytes, plus any answers you give to the follow-up clarifying questions. A recipe request sends the meal name and the dietary note you typed with it. A suggested recipe sends a date and nothing else. Your name, phone number and account details are not part of any of those requests.</li>
+      <li><strong>Who processes it</strong>: on our own allowance, <a href="https://neuralwatt.com" target="_blank">Neuralwatt</a>, through an OpenAI-compatible API. Text requests use the model <code>glm-5.2</code> and photo estimates use <code>qwen3.6-35b-fast</code>. If you have supplied your own AI key, the text features go to your own provider instead; see "Using your own AI key" below.</li>
+      <li><strong>How long we keep it</strong>: the image you submit is not stored at all. It is held in memory for the length of the call and sent on; nothing writes it to a disk or a database. What is kept from a photo estimate is the result, the food name and the portion options, in memory-backed storage for <strong>15 minutes</strong>, so you can pick a portion size. The background job record that carries that result expires after <strong>1 hour</strong>. The prompt text is not kept.</li>
+      <li><strong>Limits</strong>: every account using our managed AI gets a daily allowance of AI calls, shared by estimates, recipes and suggested recipes, and the App shows how many you have left. There is also a per-minute rate limit and a monthly spend limit that switches our managed AI off for everyone when it is reached.</li>
+    </ul>
+    <h3>Using your own AI key</h3>
+    <p>You can supply your own provider key instead of using our allowance. The App accepts one provider's key today, <strong>Groq</strong>, and it is stored in your device's encrypted secure store. It covers the text features: <strong>text estimates, recipes and suggested recipes</strong>. When you make one of those, the key is attached to <strong>that single request</strong>, and our AI service uses it as the authorisation for one model call <strong>to Groq</strong>, the provider that key belongs to, not to the AI vendor our own calls run on. It authorises that one call and nothing else. We do not store the key, and it is not written to our logs. On your account we record only a true/false flag saying that you are using your own key.</p>
+    <p>A call that runs on your key does not touch your daily allowance and is not counted, because it costs us nothing.</p>
+    <p><strong>Photo estimates work differently.</strong> They always run on our own key, never on yours, and they always count against your daily allowance even when you have supplied a personal key. The App does not attach your key to a photo estimate at all.</p>
+    <p>Estimates of workouts and weight are not AI features. Your daily calorie target is calculated with the Mifflin St Jeor formula, not a model.</p>
+
+    <h2>9. Analytics and diagnostics</h2>
+    <h3>a) PostHog, product analytics</h3>
+    <p>The App and our servers send product events to <a href="https://posthog.com" target="_blank">PostHog</a>. Session replay, autocapture, automatic lifecycle events and surveys are all <strong>disabled</strong>.</p>
+    <ul>
+      <li>Before you sign in, events carry the anonymous device UUID. After you sign in, the App switches to your Firebase user id so that app-side and server-side events line up on one person.</li>
+      <li>Events cover things like opening the App, logging a meal or workout, connecting or syncing health data, sharing a post, liking, commenting, creating or renaming a group, changing plan, sending feedback, and every failure path such as a failed estimate or a degraded screen.</li>
+      <li><strong>Content is never included.</strong> Food names, meal descriptions, comment text, feedback message text, phone numbers and image bytes are not sent. Calorie values are bucketed into coarse bands (0, 0 to 100, 100 to 300, 300 to 600, 600 to 1000, and 1000 or more) rather than sent exactly.</li>
+    </ul>
+    <h3>b) Sentry, crash and error reporting</h3>
+    <p>The App uses <a href="https://sentry.io" target="_blank">Sentry</a> to capture crashes and errors, including native Android crashes and ANRs. Sentry receives error messages, stack traces, device and OS metadata, screen navigation breadcrumbs, and breadcrumbs for failed API calls (method, service, path, status code, duration and request id). You are identified to Sentry only by the anonymous device UUID, not by your phone number or account id. Session replay is off, and 20 percent of performance traces are sampled.</p>
+    <p>Separately from those, the Sentry SDK keeps a network breadcrumb for each recent API request the App made, and a network breadcrumb carries that request's URL. Before a breadcrumb leaves the device the App strips <code>Authorization</code> headers, the headers that carry your own AI key, anything matching a provider key pattern, and any phone number sitting in the URL's parameters. Only network breadcrumbs carry request URLs; navigation and console breadcrumbs do not.</p>
+    <p>The same stripping is applied to request data, error messages and stack frame variables before an event is sent.</p>
+    <h3>c) ConfigCat, feature flags</h3>
+    <p>The App uses <a href="https://configcat.com" target="_blank">ConfigCat</a> to turn features on and off remotely. It receives only the anonymous device UUID, so a given device gets a stable answer. No account or personal data is sent.</p>
+    <h3>d) Our server logs</h3>
+    <p>Our services <strong>do not write an access log</strong>. There is no per-request record of the raw request line, so a query string, which is where a phone number would sit during a friend search, never reaches a log file at all.</p>
+    <p>What we do write are our own application log lines: what an operation did, how it ended, and internal identifiers such as the request id and the account id it belongs to. They do not carry diary content, phone numbers or keys. When one of our services logs the address of a call it made to another service, that address is scrubbed first. Logs are for diagnosing failures, not for analysing your diary.</p>
+
+    <h2>10. Payments</h2>
+    <p>Subscriptions are sold through <strong>Google Play</strong> and managed by <a href="https://www.revenuecat.com" target="_blank">RevenueCat</a>. The App never sees, handles or stores your card details; the purchase happens in the Google Play sheet.</p>
+    <p>RevenueCat is configured with your Firebase user id as the customer id, so a purchase attaches to your account. RevenueCat notifies our server over an authenticated webhook, and we store the resulting subscription state: active or not, expiry, product id, and the RevenueCat customer id, plus a copy of the notification RevenueCat sent us, kept so the same notification cannot be replayed against your account. We clear the contents of that copy after <strong>180 days</strong> and keep only the record that the notification arrived, which is the part that stops a replay. Restoring purchases asks Google Play and RevenueCat for your existing entitlements.</p>
+    <p><strong>Deleting your account does not cancel a Google Play subscription.</strong> That billing belongs to Google Play, not to us, so a subscription left running keeps renewing after the account is gone. Cancel it in Google Play first. See <a href="delete-account.html">how to delete your account</a>.</p>
+
+    <h2>11. Permissions</h2>
+    <p>The table below lists the permissions that matter for privacy, and why they are there. Some are declared by the libraries the App is built on rather than requested by a feature; those are marked as such. The last row covers the remainder.</p>
     <table>
-      <tr><th>Data</th><th>Purpose</th><th>Service</th></tr>
-      <tr><td>Anonymous device UUID</td><td>Unique device identity (no PII)</td><td>PostHog, Sentry, ConfigCat</td></tr>
-      <tr><td>App opened event</td><td>Usage frequency</td><td>PostHog</td></tr>
-      <tr><td>API call success/failure</td><td>AI feature reliability</td><td>PostHog</td></tr>
-      <tr><td>Crash reports &amp; errors</td><td>Bug detection and fixes</td><td>Sentry</td></tr>
-      <tr><td>Feature flag evaluation</td><td>Staged feature rollouts</td><td>ConfigCat</td></tr>
+      <tr><th>Permission</th><th>Why it is there</th></tr>
+      <tr><td>INTERNET</td><td>Talking to our servers and the third parties listed in section 13.</td></tr>
+      <tr><td>ACCESS_NETWORK_STATE</td><td>Declared by the Sentry SDK.</td></tr>
+      <tr><td>CAMERA</td><td>Taking meal photos, group proof photos, group cover images and your profile photo.</td></tr>
+      <tr><td>READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE</td><td>Picking an existing image from your library, on Android 12L and older only (declared with maxSdkVersion 32).</td></tr>
+      <tr><td>RECORD_AUDIO</td><td>Declared by the camera and image picker modules so that video capture can include sound. The App has no voice or audio recording feature.</td></tr>
+      <tr><td>VIBRATE</td><td>Haptic feedback on taps and confirmations.</td></tr>
+      <tr><td>WAKE_LOCK</td><td>Declared by the Firebase Authentication SDK.</td></tr>
+      <tr><td>POST_NOTIFICATIONS</td><td>Water reminders and fasting milestone alerts. These are scheduled and fired locally, on your device.</td></tr>
+      <tr><td>RECEIVE_BOOT_COMPLETED</td><td>Rescheduling those local reminders after a restart.</td></tr>
+      <tr><td>health.READ_STEPS, READ_EXERCISE, READ_SLEEP, READ_DISTANCE, READ_ACTIVE_CALORIES_BURNED, READ_TOTAL_CALORIES_BURNED</td><td>Reading the health data described in section 6, only after you grant it.</td></tr>
+      <tr><td>health.READ_HEALTH_DATA_HISTORY</td><td>Reading health records older than 30 days, for the initial backfill.</td></tr>
+      <tr><td>health.READ_HEALTH_DATA_IN_BACKGROUND</td><td>Optional. Requested separately from the Connections screen.</td></tr>
+      <tr><td>Everything else, declared by libraries</td><td>The Play billing, Firebase and notification libraries bring further permissions of their own: Play billing, lookups against Google Play services, home-screen badge counts, and the permission to receive a Firebase Cloud Messaging message. <strong>We do not register for push notifications</strong>, so nothing is ever delivered on that last one. None of these is requested from you at runtime, and none is used to collect data.</td></tr>
     </table>
-    <p><strong>No personally identifiable information (PII) is ever included in analytics or error reports.</strong></p>
+    <p>The App also declares that it can see two other apps on your device: Health Connect, so it can tell whether the provider is installed, and Instagram, so the "share to Stories" button can work. It cannot read anything from either.</p>
+    <p>The App requests <strong>no location permission, no contacts permission and no advertising identifier</strong>.</p>
 
-    <h2>5. Data We Do NOT Collect</h2>
+    <h2>12. Data retention and deletion</h2>
+    <h3>What you can delete yourself</h3>
     <ul>
-      <li>We do not collect personal information (name, email, phone number) through the App.</li>
-      <li>We do not require account creation or sign-in.</li>
-      <li>We do not display advertisements or use advertising identifiers.</li>
-      <li>We do not track your location.</li>
-      <li>We do not access your camera, contacts, microphone, or files.</li>
-      <li>We do not sell, share, or rent your data to any third party.</li>
-      <li>We do not perform session recording, heatmap tracking, or automatic event capture.</li>
+      <li><strong>Diary entries.</strong> Deleting an entry removes it from your diary and from every total and streak calculation. The row is retained on our servers flagged as deleted so that the deletion reaches your other sessions.</li>
+      <li><strong>Posts</strong> you created and <strong>comments</strong> you wrote. They leave every view immediately, yours and everyone else's, and a photo on a deleted post is removed from storage there and then. The row behind them is kept flagged as deleted for <strong>30 days</strong> and is then erased. <strong>Likes</strong> you gave are different, and are deleted outright, row and all.</li>
+      <li><strong>Group proof photos</strong> you uploaded. Deleting one removes the image and its comments and likes immediately.</li>
+      <li><strong>Groups you own.</strong> Deleting a group removes its membership, tasks, proofs, cover image, reminders and streak.</li>
+      <li><strong>Friends and blocks</strong>, by unfriending or unblocking.</li>
+      <li>Your <strong>profile photo</strong> can be replaced with a new one. There is currently no in-app action that removes it without replacing it.</li>
     </ul>
-
-    <h2>6. Feedback &amp; Bug Reports</h2>
-    <p>If you choose to send feedback or report a bug through the App, a pre-filled email is opened in your device's email client using a <code>mailto:</code> link. The App itself does not collect or store your email address. Sending the email is entirely your choice and is handled by your email provider, not by us.</p>
-
-    <h2>7. Permissions</h2>
-    <p>The App requests the following Android permissions:</p>
+    <h3>What happens automatically</h3>
     <ul>
-      <li><strong>INTERNET</strong> — Required to send meal descriptions to the Groq API, fetch AI model lists, and communicate with analytics (PostHog), error reporting (Sentry), and feature flag (ConfigCat) services.</li>
-      <li><strong>VIBRATE</strong> — Used for haptic feedback on user interactions.</li>
-      <li><strong>POST_NOTIFICATIONS</strong> — Used for water reminders and fasting milestone notifications. You can deny or revoke this permission at any time.</li>
-      <li><strong>SCHEDULE_EXACT_ALARM</strong> — Allows scheduling notifications at precise times for fasting milestones.</li>
-      <li><strong>RECEIVE_BOOT_COMPLETED</strong> — Re-schedules pending notifications after a device restart.</li>
+      <li>Group proof photos, and the records pointing at them, are hard deleted <strong>24 hours</strong> after upload by a job that runs every 15 minutes. A storage rule removes anything that job ever misses after 2 days.</li>
+      <li>Uploads that are started but never completed are removed after <strong>1 day</strong>.</li>
+      <li>AI job records expire after <strong>1 hour</strong>, and photo estimate intermediates after <strong>15 minutes</strong>.</li>
+      <li>AI usage counters expire after about <strong>40 days</strong>.</li>
+      <li>Idempotency replay copies are deleted at <strong>48 hours</strong>, twice the 24 hours they can be replayed for.</li>
+      <li>A post or comment you deleted is hard deleted <strong>30 days</strong> after you deleted it.</li>
+      <li>The contents of a payment notification are cleared at <strong>180 days</strong>; the record that it arrived is kept, because it is what stops the same notification being replayed.</li>
+      <li>Features we removed took their data with them: mood check-ins, meal planning and the weekly recap were dropped from the product, and the columns and tables behind them were deleted.</li>
     </ul>
+    <p><strong>Internal copies outlive the content.</strong> Deleting something takes it out of the App and out of every total, streak and feed we calculate, but it does not erase every internal copy at the same moment. A post or comment leaves every view immediately and the row behind it is erased 30 days later, by a background sweep on the service that holds it. An idempotency replay copy still holds the response we already sent for that write; it stops being replayable after 24 hours and its row is deleted at 48, by the same kind of sweep on each service that keeps one. A deleted diary row is the one with no horizon: it stays flagged as deleted for as long as the account does, because it is what tells your other devices the entry is gone. The security audit trail is append-only by design and is not swept. Deleting the account, below, is what clears the rest.</p>
+    <h3>Logging out and uninstalling</h3>
+    <p>Logging out signs you out of Firebase and clears the account-scoped data on the device: the local diary, targets, sync bookkeeping, the local AI usage counter, the local display name and the local profile photo copy. Device-level values survive a logout: the theme, the anonymous device UUID, your AI provider and model choice, and your own AI key in the secure store. Uninstalling the App removes all of its on-device storage, including the secure store and the photos it saved. Neither action deletes your data from our servers.</p>
+    <h3>Deleting your account</h3>
+    <p>Settings has a <strong>Delete account</strong> option. It asks you to confirm <strong>twice</strong>, because this cannot be undone. On the second confirmation the App calls our servers, and the account is locked and signed out immediately, on every device: from that moment nothing can be logged, read or shared with it, and a device still holding a valid sign-in is refused rather than served. The App then clears its own storage on the device back to a fresh-install state. Unlike a log out, that includes the device-level values in section 4: the theme, the anonymous device UUID, your AI provider choice and your own AI key in the secure store all go too.</p>
+    <p>The erasure of your data across our services runs in the background rather than while you wait. The work starts straight away, a background sweep keeps at it every <strong>15 minutes</strong>, and any part that fails is retried, so it typically finishes <strong>within a few hours</strong>. It is deliberately never marked finished sooner than <strong>2 hours</strong> after you ask: a device that has not noticed yet can hold a valid sign-in for up to an hour, so the sweep waits that window out and clears anything that arrived after its first pass. It erases the server data described in sections 2, 3, 5, 6 and 7.</p>
+    <p>Three things are deliberately kept. The first is your <strong>account row, scrubbed</strong>: the phone number, the hash of it, the display name, the @handle, the monogram initial and the goal labels are all emptied in the same statement that marks it deleted. What is left is a tombstone carrying the internal id, the sign-in id it was keyed to, settings that describe nobody (units, profile visibility, sharing level, monogram colour) and timestamps, the notification bookkeeping in section 2 included. It stays because it is what keeps that sign-in locked out, and clearing the phone number and its hash is also what lets the same number sign up again later, as a new account. The other two are records of what happened rather than copies of your content: the <strong>security audit trail</strong> entries for that account, and the <strong>payment notification records</strong> RevenueCat sent us. We keep those for security and billing integrity.</p>
+    <p>Deleting your account does <strong>not</strong> cancel a Google Play subscription; see section 10.</p>
+    <p>If you cannot sign in, email <a href="mailto:contact@nomnomcalories.com">contact@nomnomcalories.com</a>, tell us the phone number the account is registered to, and we will delete it for you. The same address is where to ask for a copy of your data. There is also a standalone page describing the process: <a href="delete-account.html">how to delete your account</a>.</p>
 
-    <h2>8. Data Retention &amp; Deletion</h2>
-    <p>Your food diary, targets, fasting records, and preferences are stored locally on your device. You have full control:</p>
-    <ul>
-      <li>Individual food entries can be deleted by swiping them in the diary.</li>
-      <li>All app data can be deleted by clearing the App's storage in Android Settings, or by uninstalling the App.</li>
-      <li>The anonymous device UUID is deleted when you clear storage or uninstall.</li>
-    </ul>
-    <p>Anonymous analytics and error data that has already been sent to PostHog, Sentry, or ConfigCat is subject to those services' respective retention policies. Since this data contains no PII, it cannot be linked back to you once the device UUID is deleted.</p>
+    <h2>13. Third-party services</h2>
+    <table>
+      <tr><th>Service</th><th>What it receives</th></tr>
+      <tr><td>Google Firebase Authentication</td><td>Your phone number, in order to send and verify the SMS code, and it issues the user id your account is keyed to.</td></tr>
+      <tr><td>Microsoft Azure</td><td>Hosts our services, stores uploaded media, and holds short-lived AI job data in a managed cache.</td></tr>
+      <tr><td>Neon</td><td>Hosts the PostgreSQL databases behind our social and wellness services, over TLS.</td></tr>
+      <tr><td>MongoDB Atlas</td><td>Hosts the databases behind our food catalogue and user configuration services.</td></tr>
+      <tr><td>Neuralwatt</td><td>The meal text or meal photo you submit for AI analysis, and the model name. This is the vendor our own AI allowance runs on, and it is the only one a photo estimate ever reaches.</td></tr>
+      <tr><td>Groq</td><td>Only if you have supplied your own AI key: the meal text you submit, the model name, and that key, used as the authorisation for that one call. See section 8.</td></tr>
+      <tr><td>PostHog</td><td>Product analytics events, identified by the anonymous device UUID before sign-in and by your Firebase user id afterwards. No content, no phone number.</td></tr>
+      <tr><td>Sentry</td><td>Crash and error reports, stack traces, device and OS metadata, and breadcrumbs: navigation, failed requests, and the URLs of recent API requests with credentials and phone numbers stripped. Identified by the anonymous device UUID.</td></tr>
+      <tr><td>ConfigCat</td><td>The anonymous device UUID, to evaluate feature flags.</td></tr>
+      <tr><td>RevenueCat</td><td>Subscription purchase and status information, keyed to your Firebase user id.</td></tr>
+      <tr><td>Google Play</td><td>Processes the payment for a subscription.</td></tr>
+    </table>
+    <p>Each service handles the data it receives under its own privacy policy: <a href="https://firebase.google.com/support/privacy" target="_blank">Firebase</a>, <a href="https://privacy.microsoft.com/privacystatement" target="_blank">Microsoft Azure</a>, <a href="https://groq.com/privacy-policy/" target="_blank">Groq</a>, <a href="https://neon.tech/privacy-policy" target="_blank">Neon</a>, <a href="https://www.mongodb.com/legal/privacy-policy" target="_blank">MongoDB</a>, <a href="https://posthog.com/privacy" target="_blank">PostHog</a>, <a href="https://sentry.io/privacy/" target="_blank">Sentry</a>, <a href="https://configcat.com/policies/privacy/" target="_blank">ConfigCat</a>, <a href="https://www.revenuecat.com/privacy" target="_blank">RevenueCat</a>, <a href="https://policies.google.com/privacy" target="_blank">Google</a>.</p>
 
-    <h2>9. Children's Privacy</h2>
-    <p>The App is not directed at children under 13. We do not knowingly collect data from children. If you believe a child under 13 has provided data through the App, please contact us so we can take appropriate action.</p>
+    <h2>14. Children's privacy</h2>
+    <p>The App is not directed at children under 13, and the lowest age its onboarding accepts is 14. We do not knowingly collect data from children under 13. If you believe a child under 13 has an account, contact us and we will delete it.</p>
 
-    <h2>10. Changes to This Policy</h2>
-    <p>We may update this Privacy Policy from time to time. Changes will be reflected on this page with an updated date below. We encourage you to review this policy periodically.</p>
+    <h2>15. Changes to this policy</h2>
+    <p>We update this policy when the App changes what it collects or who it sends data to. The current version always lives at <a href="https://nomnomcalories.com/">nomnomcalories.com</a>, with the date below. The App also shows a shorter summary of this policy in Settings.</p>
 
-    <h2>11. Contact</h2>
-    <p>If you have questions about this Privacy Policy, you can reach us at: <a href="mailto:contact@nomnomcalories.com">contact@nomnomcalories.com</a></p>
+    <h2>16. Contact</h2>
+    <p>Questions and data requests: <a href="mailto:contact@nomnomcalories.com">contact@nomnomcalories.com</a>. To delete your account, use Delete account in the App's Settings, or see <a href="delete-account.html">how to delete your account</a>; write to the same address if you cannot sign in. The App's Feedback option opens a pre-filled email to that address; it does not send anything to us by itself, and the message text is never included in analytics.</p>
 
-    <p class="updated">Last updated: April 24, 2026</p>
+    <p class="updated">Last updated: July 31, 2026</p>
   </div>
 </body>
 </html>

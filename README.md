@@ -1,4 +1,4 @@
-# Nom Nom Calories — Privacy Policy
+# Nom Nom Calories, Privacy Policy
 
 This repository hosts the privacy policy for the **Nom Nom Calories** Android app, served via GitHub Pages.
 
@@ -9,8 +9,9 @@ This repository hosts the privacy policy for the **Nom Nom Calories** Android ap
 
 ## Structure
 
-- `index.html` — the privacy policy page
-- `CNAME` — custom domain configuration for GitHub Pages
+- `index.html` - the privacy policy page
+- `delete-account.html` - the standalone account deletion page (linked from the policy and from the Play listing)
+- `CNAME` - custom domain configuration for GitHub Pages
 
 ## Updating the Policy
 

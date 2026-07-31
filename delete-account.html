@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delete your account, Nom Nom Calories</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, sans-serif; line-height: 1.7; color: #1a1a1a; background: #fafafa; padding: 2rem 1rem; }
+    .container { max-width: 720px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 2.5rem 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    h1 { font-size: 1.75rem; font-weight: 800; margin-bottom: 0.25rem; color: #f97316; }
+    .app-name { font-size: 0.95rem; color: #888; margin-bottom: 2rem; }
+    h2 { font-size: 1.15rem; font-weight: 700; margin-top: 1.75rem; margin-bottom: 0.5rem; }
+    h3 { font-size: 1.05rem; font-weight: 600; margin-top: 1rem; margin-bottom: 0.35rem; }
+    p, li { font-size: 0.95rem; color: #333; }
+    ul { padding-left: 1.25rem; margin-top: 0.25rem; }
+    li { margin-bottom: 0.35rem; }
+    .updated { font-size: 0.85rem; color: #999; margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1rem; }
+    a { color: #f97316; }
+    table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; margin-bottom: 0.5rem; }
+    th, td { text-align: left; padding: 0.5rem 0.75rem; font-size: 0.9rem; border-bottom: 1px solid #eee; }
+    th { font-weight: 700; color: #555; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Delete your account</h1>
+    <p class="app-name">Nom Nom Calories</p>
+
+    <h2>Who this is for</h2>
+    <p>Nom Nom Calories accounts are phone-number based. You sign in with your phone number, and there is no other kind of login. Deleting your account locks that sign-in out for good and erases the data we hold for it on our servers. There are two ways to ask for that: one inside the App, and one by email if you can no longer sign in.</p>
+
+    <h2>In the App</h2>
+    <p>Use this if you can still sign in. It is the fastest route.</p>
+    <ul>
+      <li>Open <strong>Settings</strong>.</li>
+      <li>Tap <strong>Delete account</strong>.</li>
+      <li>Confirm, then confirm again. The App asks twice because this cannot be undone.</li>
+    </ul>
+    <p>The account is locked and signed out immediately, on every device. From that moment nothing can be logged, read or shared with it. The App also clears its own storage on the device back to a fresh-install state, which for a deletion means everything: the local copy of your diary, your own AI key and the device-level settings included.</p>
+    <p>The erasure of your data across our services then runs in the background rather than while you wait. The work starts straight away, a background sweep keeps at it every <strong>15 minutes</strong>, and any part that fails is retried automatically, so it typically finishes <strong>within a few hours</strong>. It is deliberately never marked finished sooner than <strong>2 hours</strong> after you ask, because a device that has not noticed yet can hold a valid sign-in for up to an hour and the sweep has to clear up anything that arrives after its first pass.</p>
+
+    <h2>If you cannot sign in</h2>
+    <p>Lost the device, lost the number, or cannot get past the sign-in code? Email <a href="mailto:contact@nomnomcalories.com">contact@nomnomcalories.com</a> from any address, and include <strong>the phone number the account is registered to</strong>, in full international format.</p>
+    <p>We check the request against that number before anything is erased, because the number is the only identity the account has. Once it checks out, the deletion described above runs in the same way.</p>
+
+    <h2>What is deleted</h2>
+    <ul>
+      <li>Your profile and identity details: phone number, the hash of it used for friend search, display name, @handle, monogram initial, goal labels, profile photo and training persona.</li>
+      <li>Your food diary, activity sessions, weight entries, goals and targets, streaks and reminder settings.</li>
+      <li>Health sync data: the daily step, sleep, distance and calorie totals synced from Health Connect, and the record of which providers you connected.</li>
+      <li>Your social data: posts, comments, likes, friends and blocks, groups you created, and your membership of groups you joined.</li>
+      <li>Photos you uploaded: meal photos, group proofs, group cover images and your profile photo.</li>
+      <li>Notification state: the per-item dismissals recording which alerts you had already cleared.</li>
+      <li>Your plan status and your AI usage counters.</li>
+    </ul>
+
+    <h2>What is kept, and why</h2>
+    <p>Three things stay behind.</p>
+    <ul>
+      <li><strong>A scrubbed account tombstone.</strong> The account row is kept, but the phone number, the hash of it, the display name, the @handle, the monogram initial and the goal labels are emptied in the same statement that marks it deleted. What is left carries the internal id, the sign-in id it was keyed to, settings that describe nobody (units, profile visibility, sharing level, monogram colour) and timestamps. It has to stay: it is what keeps that sign-in locked out, and emptying the phone number and its hash is also what lets the same number sign up again later, as a new account.</li>
+      <li><strong>A security audit trail.</strong> It is append-only by design and logs sensitive actions such as plan changes and blocks. It never held your phone number, your diary content or your keys, so once the account row is scrubbed its entries no longer point at any personal detail of yours.</li>
+      <li><strong>Payment notification records.</strong> The subscription notifications our payment provider sent us. We keep those for billing integrity, so a later dispute about a charge can still be settled. The contents of a notification are cleared after 180 days; what stays is the record that it arrived.</li>
+    </ul>
+    <p>On the phone itself, deleting from inside the App clears everything it stored locally, unlike a plain log out: the local copy of your diary, your targets, sync bookkeeping, the local copy of your profile photo, and the device-level settings too, meaning the theme, the anonymous device identifier and your own AI key in the encrypted secure store. If we delete the account for you by email instead, the App signs itself out the next time it starts, and uninstalling is what clears its local storage. Uninstalling removes anything the App had left on the device either way.</p>
+
+    <h2>Subscriptions</h2>
+    <p>Deleting your account does <strong>not</strong> cancel a Google Play subscription. Google Play owns that billing, not us, so a subscription left running keeps renewing after the account is gone. Cancel it first, at <a href="https://play.google.com/store/account/subscriptions" target="_blank">play.google.com/store/account/subscriptions</a>.</p>
+
+    <h2>Anything else</h2>
+    <p>What we store, who else receives it, and how long we keep it is set out in the <a href="index.html">privacy policy</a>. To ask for a copy of your data, email <a href="mailto:contact@nomnomcalories.com">contact@nomnomcalories.com</a>.</p>
+
+    <p class="updated">Last updated: July 31, 2026</p>
+  </div>
+</body>
+</html>
