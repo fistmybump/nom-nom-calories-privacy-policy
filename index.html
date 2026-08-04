@@ -85,10 +85,11 @@
       <li><strong>Group proof photos are handled differently.</strong> They are never served by link at all. Each stored version is encrypted with AES-256-GCM under a per-photo key, which is itself wrapped with a master key held only in our server configuration. A proof video is encrypted exactly as it was uploaded, without being re-encoded. Proofs are decrypted and streamed through our API to members of that group only.</li>
     </ul>
 
-    <h2>6. Health Connect data</h2>
+    <h2>6. Health data (Health Connect and Apple Health)</h2>
     <p>On Android you can connect the App to <a href="https://support.google.com/android/answer/12201227" target="_blank">Health Connect</a>, the system health store on your phone. Nothing is read until you grant permission in the system sheet.</p>
     <p>The App asks to <strong>read</strong> these record types: Steps, Exercise sessions, Sleep sessions, Distance, Active calories burned, and Total calories burned. It also asks for the Health Connect "read history" permission, which allows reading records older than 30 days. Background reading is a <strong>separate, optional</strong> request made from the Connections screen. The sync itself runs while the App is open, so declining that request does not stop your data syncing. The release build of the App declares <strong>no Health Connect write permission</strong>: it never writes anything back into your health store.</p>
-    <p>What we upload to your account is summarised, not raw:</p>
+    <p>On iPhone the App connects to <strong>Apple Health</strong> (HealthKit) instead, and reads <strong>two</strong> types only: steps and sleep. There is no history permission and no background reading on iOS: the sync runs while the App is open. iOS deliberately does not tell an app what you granted, so what the App can read is shown and changed in the Health app, not in the App. The App Store build never writes health data; the write permission the App declares is used only by development builds, to create test data.</p>
+    <p>What we upload to your account is summarised, not raw (on iPhone, only the first two lines apply):</p>
     <ul>
       <li>Steps totalled per calendar day.</li>
       <li>Sleep totalled per wake-up day, plus light, deep, REM and awake minutes when your source records stages.</li>
@@ -96,7 +97,7 @@
       <li>Exercise sessions: activity type, start time, duration in minutes, and the provider's record id, which is used so that re-syncing the same workout updates it instead of duplicating it.</li>
     </ul>
     <p>When you first connect, the App backfills the last <strong>30 days</strong>. After that it syncs yesterday and today when you bring the App to the foreground, and not more often than once every <strong>15 minutes</strong>. Each metric has its own toggle, and a metric you turn off is not read or sent.</p>
-    <p>Tapping Disconnect in the App stops the sync. Data already synced to your account stays until you delete the account (section 12). Revoking the App's access inside Health Connect settings stops it at the source.</p>
+    <p>Tapping Disconnect in the App stops the sync. Data already synced to your account stays until you delete the account (section 12). Revoking the App's access stops it at the source: inside Health Connect settings on Android, or in the Health app on iPhone.</p>
 
     <h2>7. Social features</h2>
     <p>Social features are opt-in in the sense that nothing happens until you add a friend or create a group.</p>
