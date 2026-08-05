@@ -166,6 +166,7 @@
       <tr><td>Everything else, declared by libraries</td><td>The Play billing, Firebase and notification libraries bring further permissions of their own: Play billing, lookups against Google Play services, home-screen badge counts, and the permission to receive a Firebase Cloud Messaging message. <strong>We do not register for push notifications</strong>, so nothing is ever delivered on that last one. None of these is requested from you at runtime, and none is used to collect data.</td></tr>
     </table>
     <p>The App also declares that it can see two other apps on your device: Health Connect, so it can tell whether the provider is installed, and Instagram, so the "share to Stories" button can work. It cannot read anything from either.</p>
+    <p>That table lists what the <strong>Android</strong> app declares in its manifest. The iPhone app has no equivalent list: iOS asks you at the moment a feature needs something. The App asks for four things that way, the <strong>camera</strong>, your <strong>photo library</strong>, <strong>notifications</strong> and access to <strong>Apple Health</strong>, and uses each for the purposes described above.</p>
     <p>The App requests <strong>no location permission, no contacts permission and no advertising identifier</strong>.</p>
 
     <h2>12. Data retention and deletion</h2>
