@@ -85,10 +85,11 @@
       <li><strong>Group proof photos are handled differently.</strong> They are never served by link at all. Each stored version is encrypted with AES-256-GCM under a per-photo key, which is itself wrapped with a master key held only in our server configuration. A proof video is encrypted exactly as it was uploaded, without being re-encoded. Proofs are decrypted and streamed through our API to members of that group only.</li>
     </ul>
 
-    <h2>6. Health Connect data</h2>
+    <h2>6. Health data (Health Connect and Apple Health)</h2>
     <p>On Android you can connect the App to <a href="https://support.google.com/android/answer/12201227" target="_blank">Health Connect</a>, the system health store on your phone. Nothing is read until you grant permission in the system sheet.</p>
     <p>The App asks to <strong>read</strong> these record types: Steps, Exercise sessions, Sleep sessions, Distance, Active calories burned, and Total calories burned. It also asks for the Health Connect "read history" permission, which allows reading records older than 30 days. Background reading is a <strong>separate, optional</strong> request made from the Connections screen. The sync itself runs while the App is open, so declining that request does not stop your data syncing. The release build of the App declares <strong>no Health Connect write permission</strong>: it never writes anything back into your health store.</p>
-    <p>What we upload to your account is summarised, not raw:</p>
+    <p>On iPhone the App connects to <strong>Apple Health</strong> (HealthKit) instead, and reads <strong>two</strong> types only: steps and sleep. There is no history permission and no background reading on iOS: the sync runs while the App is open. iOS deliberately does not tell an app what you granted, so what the App can read is shown and changed in the Health app, not in the App. The App Store build never writes health data; the write permission the App declares is used only by development builds, to create test data.</p>
+    <p>What we upload to your account is summarised, not raw (on iPhone, only the first two lines apply):</p>
     <ul>
       <li>Steps totalled per calendar day.</li>
       <li>Sleep totalled per wake-up day, plus light, deep, REM and awake minutes when your source records stages.</li>
@@ -96,7 +97,7 @@
       <li>Exercise sessions: activity type, start time, duration in minutes, and the provider's record id, which is used so that re-syncing the same workout updates it instead of duplicating it.</li>
     </ul>
     <p>When you first connect, the App backfills the last <strong>30 days</strong>. After that it syncs yesterday and today when you bring the App to the foreground, and not more often than once every <strong>15 minutes</strong>. Each metric has its own toggle, and a metric you turn off is not read or sent.</p>
-    <p>Tapping Disconnect in the App stops the sync. Data already synced to your account stays until you delete the account (section 12). Revoking the App's access inside Health Connect settings stops it at the source.</p>
+    <p>Tapping Disconnect in the App stops the sync. Data already synced to your account stays until you delete the account (section 12). Revoking the App's access stops it at the source: inside Health Connect settings on Android, or in the Health app on iPhone.</p>
 
     <h2>7. Social features</h2>
     <p>Social features are opt-in in the sense that nothing happens until you add a friend or create a group.</p>
@@ -165,6 +166,7 @@
       <tr><td>Everything else, declared by libraries</td><td>The Play billing, Firebase and notification libraries bring further permissions of their own: Play billing, lookups against Google Play services, home-screen badge counts, and the permission to receive a Firebase Cloud Messaging message. <strong>We do not register for push notifications</strong>, so nothing is ever delivered on that last one. None of these is requested from you at runtime, and none is used to collect data.</td></tr>
     </table>
     <p>The App also declares that it can see two other apps on your device: Health Connect, so it can tell whether the provider is installed, and Instagram, so the "share to Stories" button can work. It cannot read anything from either.</p>
+    <p>That table lists what the <strong>Android</strong> app declares in its manifest. The iPhone app has no equivalent list: iOS asks you at the moment a feature needs something. The App asks for four things that way, the <strong>camera</strong>, your <strong>photo library</strong>, <strong>notifications</strong> and access to <strong>Apple Health</strong>, and uses each for the purposes described above.</p>
     <p>The App requests <strong>no location permission, no contacts permission and no advertising identifier</strong>.</p>
 
     <h2>12. Data retention and deletion</h2>
@@ -224,7 +226,7 @@
     <h2>16. Contact</h2>
     <p>Questions and data requests: <a href="mailto:contact@nomnomcalories.com">contact@nomnomcalories.com</a>. To delete your account, use Delete account in the App's Settings, or see <a href="delete-account.html">how to delete your account</a>; write to the same address if you cannot sign in. The App's Feedback option opens a pre-filled email to that address; it does not send anything to us by itself, and the message text is never included in analytics.</p>
 
-    <p class="updated">Last updated: July 31, 2026</p>
+    <p class="updated">Last updated: August 5, 2026</p>
   </div>
 </body>
 </html>
