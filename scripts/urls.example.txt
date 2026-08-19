@@ -1,0 +1,4 @@
+# One product URL per line. Lines starting with # are ignored.
+# Examples (replace with real product links):
+# https://www.amazon.in/dp/B0XXXXXXXX
+# https://www.flipkart.com/some-food-product/p/itmXXXXXXXXXXXXX
